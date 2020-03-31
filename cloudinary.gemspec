@@ -13,8 +13,6 @@ Gem::Specification.new do |s|
   s.summary     = %q{Client library for easily using the Cloudinary service}
   s.description = %q{Client library for easily using the Cloudinary service}
 
-  s.rubyforge_project = "cloudinary"
-
   s.files         = (`git ls-files`.split("\n") - `git ls-files {test,spec,features,samples}/*`.split("\n")) + Dir.glob("vendor/assets/javascripts/*/*") + Dir.glob("vendor/assets/html/*")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]

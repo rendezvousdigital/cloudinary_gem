@@ -563,7 +563,7 @@ class Cloudinary::Utils
       source = smart_escape(source)
       source_to_sign = source
     else
-      source = smart_escape(URI.decode(source))
+      source = smart_escape(::Addressable::URI.encode(source))
       source_to_sign = source
       unless url_suffix.blank?
         raise(CloudinaryException, "url_suffix should not include . or /") if url_suffix.match(%r([\./]))
@@ -989,7 +989,7 @@ class Cloudinary::Utils
     Cloudinary::AuthToken.generate options
 
   end
-  
+
   private
 
 
@@ -1006,24 +1006,24 @@ class Cloudinary::Utils
     source
   end
   private_class_method :fully_unescape
-  
+
   def self.hash_query_params(hash)
     if hash.respond_to?("to_query")
       hash.to_query
     else
-      flat_hash_to_query_params(hash)      
+      flat_hash_to_query_params(hash)
     end
   end
 
   def self.flat_hash_to_query_params(hash)
-    hash.collect do |key, value|      
+    hash.collect do |key, value|
       if value.is_a?(Array)
         value.map{|v| "#{CGI.escape(key.to_s)}[]=#{CGI.escape(v.to_s)}"}.join("&")
-      else  
+      else
         "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"
-      end        
+      end
     end.compact.sort!.join('&')
-  end  
+  end
 
   def self.number_pattern
     "([0-9]*)\\.([0-9]+)|([0-9]+)"
